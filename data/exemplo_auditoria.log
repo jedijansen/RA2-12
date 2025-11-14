@@ -1,0 +1,4 @@
+LogEntry {timestamp = 2025-11-14 15:01:55 UTC, acao = Add "A001" 10, detalhes = "adicionado init", status = Sucesso}
+LogEntry {timestamp = 2025-11-14 17:25:33 UTC, acao = Remove "A001" 5, detalhes = "removido init", status = Sucesso}
+LogEntry {timestamp = 2025-11-14 19:00:27 UTC, acao = UpdateQty "A002" 250, detalhes = "update init", status = Sucesso}
+LogEntry {timestamp = 2025-11-14 22:57:03 UTC, acao = Remove "X999" 1, detalhes = "tentativa item inexistente", status = Falha "Item ausente"}
