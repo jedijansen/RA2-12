@@ -92,7 +92,7 @@ loop inv logs = do
       case readMaybe qStr :: Maybe Int of
         Nothing -> putStrLn "quantidade inválida" >> loop inv logs
         Just q ->
-          case removeItem now iid inv of
+          case removeItem now iid q inv of
             Left err -> do
               let le = mkLogEntry now (Remove iid q) ("falha remove: " ++ err) (Falha err)
               appendLogArquivo le

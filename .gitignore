@@ -1,0 +1,57 @@
+# Arquivos compilados Haskell
+*.hi
+*.o
+*.exe
+*.dyn_hi
+*.dyn_o
+*.p_hi
+*.p_o
+
+
+
+# Arquivos de dados gerados pelo programa
+Inventario.dat
+Auditoria.log
+
+# Arquivos de build
+dist/
+dist-newstyle/
+cabal-dev/
+*.cabal
+.stack-work/
+.ghc.environment.*
+
+# Arquivos temporários
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
+*.orig
+
+# Arquivos de IDE
+.vscode/
+.idea/
+*.code-workspace
+.haskell-language-server/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# Arquivos de teste
+*.prof
+*.ps
+*.aux
+*.hp
+
+# Arquivos de documentação gerados
+*.html
+*.css
+*.js
+
+# Arquivos de backup
+*.backup
+bug
+

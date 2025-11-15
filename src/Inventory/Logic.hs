@@ -27,28 +27,28 @@ addItem timestamp item inventario =
   case lookupItem (itemID item) inventario of
     Just _ ->
       let mensagemErro = "Item com ID '" ++ itemID item ++ "' já existe no inventário"
-          logEntry = mkLogEntry timestamp Add mensagemErro (Falha mensagemErro)
+          logEntry = mkLogEntry timestamp (Add (itemID item) (quantidade item)) mensagemErro (Falha mensagemErro)
        in Left mensagemErro
     Nothing ->
       let novoInventario = Map.insert (itemID item) item inventario
           detalhes = "Item adicionado: ID=" ++ itemID item ++ ", Nome=" ++ nome item ++ ", Qtd=" ++ show (quantidade item) ++ ", Categoria=" ++ categoria item
-          logEntry = mkLogEntry timestamp Add detalhes Sucesso
+          logEntry = mkLogEntry timestamp (Add (itemID item) (quantidade item)) detalhes Sucesso
        in Right (novoInventario, logEntry)
 
 -- | Remove um item do inventário.
 -- Validação: o item deve existir no inventário.
 -- Retorna Left com mensagem de erro se o item não existe, Right com o inventário atualizado e log.
-removeItem :: UTCTime -> String -> Inventario -> Either String ResultadoOperacao
-removeItem timestamp itemID inventario =
+removeItem :: UTCTime -> String -> Int -> Inventario -> Either String ResultadoOperacao
+removeItem timestamp itemID quantidade inventario =
   case lookupItem itemID inventario of
     Nothing ->
       let mensagemErro = "Item com ID '" ++ itemID ++ "' não existe no inventário"
-          logEntry = mkLogEntry timestamp Remove mensagemErro (Falha mensagemErro)
+          logEntry = mkLogEntry timestamp (Remove itemID quantidade) mensagemErro (Falha mensagemErro)
        in Left mensagemErro
     Just item ->
       let novoInventario = Map.delete itemID inventario
-          detalhes = "Item removido: ID=" ++ itemID ++ ", Nome=" ++ nome item
-          logEntry = mkLogEntry timestamp Remove detalhes Sucesso
+          detalhes = "Item removido: ID=" ++ itemID ++ ", Nome=" ++ nome item ++ ", Quantidade=" ++ show quantidade
+          logEntry = mkLogEntry timestamp (Remove itemID quantidade) detalhes Sucesso
        in Right (novoInventario, logEntry)
 
 -- | Atualiza a quantidade de um item no inventário.
@@ -59,19 +59,19 @@ updateQty :: UTCTime -> String -> Int -> Inventario -> Either String ResultadoOp
 updateQty timestamp itemID novaQuantidade inventario
   | novaQuantidade < 0 =
       let mensagemErro = "Quantidade inválida: " ++ show novaQuantidade ++ " (deve ser >= 0)"
-          logEntry = mkLogEntry timestamp Update mensagemErro (Falha mensagemErro)
+          logEntry = mkLogEntry timestamp (UpdateQty itemID novaQuantidade) mensagemErro (Falha mensagemErro)
        in Left mensagemErro
   | otherwise =
       case lookupItem itemID inventario of
         Nothing ->
           let mensagemErro = "Item com ID '" ++ itemID ++ "' não existe no inventário"
-              logEntry = mkLogEntry timestamp Update mensagemErro (Falha mensagemErro)
+              logEntry = mkLogEntry timestamp (UpdateQty itemID novaQuantidade) mensagemErro (Falha mensagemErro)
            in Left mensagemErro
         Just itemAntigo ->
           let itemAtualizado = itemAntigo { quantidade = novaQuantidade }
               novoInventario = Map.insert itemID itemAtualizado inventario
               detalhes = "Quantidade atualizada: ID=" ++ itemID ++ ", Nome=" ++ nome itemAntigo ++ ", Qtd antiga=" ++ show (quantidade itemAntigo) ++ ", Qtd nova=" ++ show novaQuantidade
-              logEntry = mkLogEntry timestamp Update detalhes Sucesso
+              logEntry = mkLogEntry timestamp (UpdateQty itemID novaQuantidade) detalhes Sucesso
            in Right (novoInventario, logEntry)
 
 -- | Lista todos os itens do inventário.
