@@ -9,7 +9,7 @@
 - Gustavo Jansen Butenas
 - João Pedro Bezerra
 
-**Link para ambiente de execução:** 
+**Link para ambiente de execução:**  https://replit.com/join/xhmnszhqcv-bezerrajoaopedr
 
 ---
 
@@ -48,12 +48,6 @@ ghc -isrc src/Main.hs -o main
 # Executar
 ./main
 ```
-
-### Execução no Render
-
-[Instruções serão adicionadas após configuração no Render]
-
----
 
 ## Comandos Disponíveis
 
